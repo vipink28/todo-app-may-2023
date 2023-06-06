@@ -1,5 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser as userRegular } from '@fortawesome/free-regular-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 
 function App() {
   return (
@@ -7,6 +11,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
+          <FontAwesomeIcon icon={userRegular} />
+          <FontAwesomeIcon icon={faUser} />
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
