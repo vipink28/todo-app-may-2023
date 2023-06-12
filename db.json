@@ -1,4 +1,23 @@
 {
-    "users":[],
-    "tasks":[]
+  "users": [
+    {
+      "name": "Vipin",
+      "email": "vipin@gmail.cojm",
+      "password": "admin",
+      "id": 1
+    },
+    {
+      "name": "Vipin",
+      "email": "vipin@gmail.com",
+      "password": "admin",
+      "id": 2
+    },
+    {
+      "name": "shubham",
+      "email": "shubham@gamil.com",
+      "password": "admin",
+      "id": 3
+    }
+  ],
+  "tasks": []
 }

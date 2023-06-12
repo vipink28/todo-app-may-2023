@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 function Register(props) {
   const [formData, setFormData]= useState();
+  const [message, setMessage] = useState("");
 
   const handleChange=(e)=>{
-      console.log(e);
       let { name, value } = e.target;
       setFormData((prev)=>({
           ...prev,
@@ -13,8 +13,23 @@ function Register(props) {
       }))
   }
 
-  const submitForm=()=>{
-    
+  const submitForm=async(e)=>{
+    e.preventDefault();
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }
+
+    const response = await fetch('http://localhost:5000/users', options);
+    if(response.ok){
+      setMessage("Registered Successfully");
+    }else{
+      setMessage("Something went wrong, please try again");
+    }
   }
 
   return (
@@ -39,7 +54,8 @@ function Register(props) {
         </label>
         <input type="password" name="password" className="form-control" onChange={handleChange}/>
       </div>
-      <button className="btn btn-primary">Register</button>    
+      <p>{message}</p>
+      <button className="btn btn-primary" onClick={submitForm}>Register</button>    
     </form>
   );
 }
