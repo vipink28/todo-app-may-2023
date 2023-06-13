@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 function Register(props) {
   const [formData, setFormData]= useState();
@@ -15,7 +15,6 @@ function Register(props) {
 
   const submitForm=async(e)=>{
     e.preventDefault();
-
     const options = {
       method: "POST",
       headers: {
@@ -24,12 +23,22 @@ function Register(props) {
       body: JSON.stringify(formData)
     }
 
-    const response = await fetch('http://localhost:5000/users', options);
-    if(response.ok){
-      setMessage("Registered Successfully");
+    const checkUser = await fetch(`http://localhost:5000/users?email=${formData.email}`, {method: "GET"})
+    if(checkUser.ok){
+      const user = await checkUser.json();
+      if(user.length > 0){
+        setMessage("user already exist");
+      }else{
+        const response = await fetch('http://localhost:5000/users', options);
+        if(response.ok){
+          setMessage("Registered Successfully");
+        }else{
+          setMessage("Something went wrong, please try again");
+        }
+      }
     }else{
-      setMessage("Something went wrong, please try again");
-    }
+      setMessage("something went wrong, please try again");
+    }  
   }
 
   return (

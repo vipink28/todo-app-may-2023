@@ -3,15 +3,30 @@ import { Link } from "react-router-dom";
 
 function Login(props) {
     const [formData, setFormData]= useState();
+    const [message, setMessage] = useState("");
 
     const handleChange=(e)=>{
-        console.log(e);
         let { name, value } = e.target;
         setFormData((prev)=>({
             ...prev,
             [name]: value
         }))
     }
+
+  const submitForm=async(e)=>{
+    e.preventDefault();
+    const response =await fetch(`http://localhost:5000/users?email=${formData.email}&password=${formData.password}`, {method: "GET"});
+    const user = await response.json();
+    if(response.ok){
+      if(user.length > 0){
+        setMessage("Logged in Successfully");
+      }else{
+        setMessage("Email/Password not correct");
+      }
+    }else{
+      setMessage("Something went wrong, please try again.")
+    }
+  }
 
   return (
     <form>
@@ -28,7 +43,8 @@ function Login(props) {
         </label>
         <input type="password" name="password" className="form-control" onChange={handleChange}/>
       </div>
-      <button className="btn btn-primary">Login</button>
+      <p>{message}</p>
+      <button className="btn btn-primary" onClick={submitForm}>Login</button>
 
       <p>Having Problem in registering? <Link to='/about'>click here</Link> for help </p>
     </form>
