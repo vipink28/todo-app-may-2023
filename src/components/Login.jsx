@@ -15,11 +15,15 @@ function Login(props) {
 
   const submitForm=async(e)=>{
     e.preventDefault();
-    const response =await fetch(`http://localhost:5000/users?email=${formData.email}&password=${formData.password}`, {method: "GET"});
+    const response = await fetch(`http://localhost:5000/users?email=${formData.email}&password=${formData.password}`, {method: "GET"});
     const user = await response.json();
     if(response.ok){
       if(user.length > 0){
         setMessage("Logged in Successfully");
+        console.log(user[0]);
+        const userData = JSON.stringify(user[0]);
+        localStorage.setItem("user", userData);
+        // redirection
       }else{
         setMessage("Email/Password not correct");
       }

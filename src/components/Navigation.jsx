@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 function Navigation(props) {
+    const [user, setUser]=useState(null);
+    //useEffect();
+    useEffect(()=>{
+      const localUser = localStorage.getItem("user");
+      const user = JSON.parse(localUser);
+      setUser(user);
+    }, [])
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
@@ -15,7 +23,7 @@ function Navigation(props) {
                 <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">About</NavLink>
+                <NavLink className="nav-link" to="/about">{user.name}</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/create-task">Create Task</NavLink>
