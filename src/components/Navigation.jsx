@@ -23,7 +23,7 @@ function Navigation(props) {
                 <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">{user.name}</NavLink>
+                <NavLink className="nav-link" to="/about">{user?.name}</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/create-task">Create Task</NavLink>

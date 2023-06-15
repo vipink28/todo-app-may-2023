@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
     const [formData, setFormData]= useState();
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleChange=(e)=>{
         let { name, value } = e.target;
@@ -20,10 +22,11 @@ function Login(props) {
     if(response.ok){
       if(user.length > 0){
         setMessage("Logged in Successfully");
-        console.log(user[0]);
         const userData = JSON.stringify(user[0]);
         localStorage.setItem("user", userData);
-        // redirection
+        setTimeout(()=>{
+          navigate('/task-list');
+        }, 3000);
       }else{
         setMessage("Email/Password not correct");
       }

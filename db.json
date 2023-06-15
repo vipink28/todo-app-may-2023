@@ -11,6 +11,36 @@
       "email": "vipins@gmail.com",
       "password": "admin",
       "id": 2
+    },
+    {
+      "name": "abc",
+      "email": "abc@gmail.com",
+      "password": "admin",
+      "id": 3
+    },
+    {
+      "name": "abcd",
+      "email": "abcd@gmail.com",
+      "password": "admin",
+      "id": 4
+    },
+    {
+      "name": "abc",
+      "email": "abcde@gmail.com",
+      "password": "admin",
+      "id": 5
+    },
+    {
+      "name": "abcdef",
+      "email": "abcdef@gmail.com",
+      "password": "adminf",
+      "id": 6
+    },
+    {
+      "name": "Vipin",
+      "email": "vipink28@gmail.com",
+      "password": "admin",
+      "id": 7
     }
   ],
   "tasks": []
