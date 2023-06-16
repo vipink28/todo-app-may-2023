@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
 
 function Register(props) {
   const [formData, setFormData]= useState();
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-
+  const { message, register }=useContext(AuthContext);
 
   const handleChange=(e)=>{
       let { name, value } = e.target;
@@ -18,35 +15,7 @@ function Register(props) {
 
   const submitForm=async(e)=>{
     e.preventDefault();
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    }
-
-    const checkUser = await fetch(`http://localhost:5000/users?email=${formData.email}`, {method: "GET"})
-    if(checkUser.ok){
-      const user = await checkUser.json();
-      if(user.length > 0){
-        setMessage("user already exist");
-      }else{
-        const response = await fetch('http://localhost:5000/users', options);
-        if(response.ok){
-          setMessage("Registered Successfully");
-          const userData = await response.json();
-          localStorage.setItem("user", JSON.stringify(userData));
-          setTimeout(()=>{
-            navigate('/task-list');
-          }, 3000);
-        }else{
-          setMessage("Something went wrong, please try again");
-        }
-      }
-    }else{
-      setMessage("something went wrong, please try again");
-    }  
+    register(formData);
   }
 
   return (

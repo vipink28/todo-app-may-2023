@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext} from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 function Navigation(props) {
-    const [user, setUser]=useState(null);
-    //useEffect();
-    useEffect(()=>{
-      const localUser = localStorage.getItem("user");
-      const user = JSON.parse(localUser);
-      setUser(user);
-    }, [])
+  const { user } = useContext(AuthContext);
+  
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
