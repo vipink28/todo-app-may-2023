@@ -15,12 +15,18 @@ function Navigation(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              {
+                !user ?
+              <>
               <li className="nav-item">
                 <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">{user?.name}</NavLink>
+                <NavLink className="nav-link" to="/about">About</NavLink>
               </li>
+              </>
+              :
+              <>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/create-task">Create Task</NavLink>
               </li>
@@ -30,6 +36,8 @@ function Navigation(props) {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/profile">Profile</NavLink>
               </li>
+              </>
+              }
             </ul>          
           </div>
         </div>
