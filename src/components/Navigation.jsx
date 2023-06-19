@@ -1,10 +1,15 @@
 import React, { useContext} from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 function Navigation(props) {
-  const { user } = useContext(AuthContext);
-  
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const logout=()=>{
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate('/');
+  }
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -22,7 +27,7 @@ function Navigation(props) {
                 <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">About</NavLink>
+                <NavLink className="nav-link" to="/about">{user?.name}</NavLink>
               </li>
               </>
               :
@@ -34,8 +39,9 @@ function Navigation(props) {
                 <NavLink className="nav-link" to="/task-list">Task List</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/profile">Profile</NavLink>
+                <NavLink className="nav-link" to="/profile">{user?.name}</NavLink>
               </li>
+              <li className='nav-item' onClick={logout}>Logout</li>
               </>
               }
             </ul>          

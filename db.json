@@ -53,6 +53,12 @@
       "email": "vipinkumar@gmail.com",
       "password": "admin",
       "id": 9
+    },
+    {
+      "name": "ishu",
+      "email": "ishu@gmail.com",
+      "password": "admin",
+      "id": 10
     }
   ],
   "tasks": []

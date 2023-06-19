@@ -41,22 +41,55 @@ export const AuthProvider=({children})=>{
         }  
       }
 
-    //login user
-    const login=()=>{
-
+    //login user    
+    const login=async(formData)=>{
+      const response = await fetch(`http://localhost:5000/users?email=${formData.email}&password=${formData.password}`, {method: "GET"});
+      const user = await response.json();
+      if(response.ok){
+        if(user.length > 0){
+          setMessage("Logged in Successfully");
+          const userData = JSON.stringify(user[0]);
+          localStorage.setItem("user", userData);
+          setUser(user[0]);
+          setTimeout(()=>{
+            navigate('/task-list');
+          }, 3000);
+        }else{
+          setMessage("Email/Password not correct");
+        }
+      }else{
+        setMessage("Something went wrong, please try again.")
+      }
     }
+
 
     useEffect(()=>{
         const localUser = localStorage.getItem("user");
-        const user = JSON.parse(localUser);
-        setUser(user);
+        console.log(localUser);
+        if(localUser ){
+          
+          const user = JSON.parse(localUser);
+          const response = fetch(`http://localhost:5000/users?email=${user.email}`);
+          if(response.ok){
+            const existingUser = response.json();
+            if(existingUser.length > 0){
+              setUser(existingUser[0]);
+            }
+          }else{
+            console.error("something went wrong");
+          }          
+        }
+        
       }, [])
 
     return(
         <AuthContext.Provider value={{
             user,
+            setUser,
             message,
-            register
+            register,
+            login,
+            setMessage
         }}>
             {children}
         </AuthContext.Provider>
