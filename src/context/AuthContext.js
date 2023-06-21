@@ -62,12 +62,9 @@ export const AuthProvider=({children})=>{
       }
     }
 
-
     useEffect(()=>{
         const localUser = localStorage.getItem("user");
-        console.log(localUser);
-        if(localUser ){
-          
+        if(localUser ){          
           const user = JSON.parse(localUser);
           const response = fetch(`http://localhost:5000/users?email=${user.email}`);
           if(response.ok){
