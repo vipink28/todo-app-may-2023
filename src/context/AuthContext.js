@@ -64,17 +64,24 @@ export const AuthProvider=({children})=>{
 
     useEffect(()=>{
         const localUser = localStorage.getItem("user");
-        if(localUser ){          
+        const getUser=async()=>{
           const user = JSON.parse(localUser);
-          const response = fetch(`http://localhost:5000/users?email=${user.email}`);
-          if(response.ok){
-            const existingUser = response.json();
-            if(existingUser.length > 0){
-              setUser(existingUser[0]);
+          try{
+            const response = await fetch(`http://localhost:5000/users?email=${user.email}`);
+            if(response.ok){
+              const existingUser = response.json();
+              if(existingUser.length > 0){
+                setUser(existingUser[0]);
+              }
+            }else{
+              console.error("something went wrong");
             }
-          }else{
-            console.error("something went wrong");
+          }catch(err){
+            console.log(err);
           }          
+        }
+        if(localUser ){          
+            getUser();
         }
         
       }, [])
