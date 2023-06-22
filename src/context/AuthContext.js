@@ -64,12 +64,12 @@ export const AuthProvider=({children})=>{
 
     useEffect(()=>{
         const localUser = localStorage.getItem("user");
-        const getUser=async()=>{
+        const getUser = async()=>{
           const user = JSON.parse(localUser);
           try{
             const response = await fetch(`http://localhost:5000/users?email=${user.email}`);
             if(response.ok){
-              const existingUser = response.json();
+              const existingUser = await response.json();
               if(existingUser.length > 0){
                 setUser(existingUser[0]);
               }
@@ -82,8 +82,7 @@ export const AuthProvider=({children})=>{
         }
         if(localUser ){          
             getUser();
-        }
-        
+        }        
       }, [])
 
     return(
