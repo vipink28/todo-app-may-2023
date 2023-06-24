@@ -27,9 +27,9 @@ export const AuthProvider=({children})=>{
             if(response.ok){
               setMessage("Registered Successfully");
               const userData = await response.json();
-              localStorage.setItem("user", JSON.stringify(userData));
-              setUser(userData);
+              localStorage.setItem("user", JSON.stringify(userData));              
               setTimeout(()=>{
+                setUser(userData);
                 navigate('/task-list');
               }, 3000);
             }else{
