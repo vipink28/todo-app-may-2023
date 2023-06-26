@@ -21,8 +21,10 @@ export const TaskProvider=({children})=>{
         const response = await fetch("http://localhost:5000/tasks", config);
         if(response.ok){
             setMessage("Task created successfully");
-            const taskData = await response.json();
-            setLatestTask(taskData);
+            getAllTasks();
+            setTimeout(()=>{
+                setMessage("");
+            }, 2000)
         }else{
             setMessage("Something went wrong, please try again");
         }

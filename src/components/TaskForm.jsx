@@ -2,8 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import TaskContext from "../context/TaskContext";
 import AuthContext from "../context/AuthContext";
 
+
+
 function TaskForm(props) {
-  const [formData, setFormData]=useState();
+  const init = {
+    title: "",
+    description: "",
+    duedate: ""
+  }
+  const [formData, setFormData]=useState(init);
+
   const { createTask } = useContext(TaskContext);
   const { message, setMessage, user } = useContext(AuthContext);
 
@@ -25,6 +33,7 @@ function TaskForm(props) {
 const submitForm = (e)=>{
     e.preventDefault();
     createTask(formData);
+    setFormData(init);
 }
   return (
     <div className="p-3 w-75">
@@ -34,7 +43,7 @@ const submitForm = (e)=>{
           <form>
             <div className="mb-3">
               <label className="form-label">Title</label>
-              <input type="text" name="title" className="form-control" onChange={handleChange} />
+              <input type="text" name="title" className="form-control" value={formData.title} onChange={handleChange} />
             </div>
             <div className="mb-3">
               <label className="form-label">Description</label>
@@ -43,6 +52,7 @@ const submitForm = (e)=>{
                 className="form-control"
                 rows="8"
                 onChange={handleChange}
+                value={formData.description}
               ></textarea>
             </div>
             <div className="mb-3">
@@ -52,6 +62,7 @@ const submitForm = (e)=>{
                 name="duedate"
                 className="form-control"
                 onChange={handleChange}
+                value={formData.duedate}
               />
             </div>
             <p className="mb-3">{message}</p>
