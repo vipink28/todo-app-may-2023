@@ -4,11 +4,11 @@ import AuthContext from "./AuthContext";
 const TaskContext = createContext();
 
 export const TaskProvider=({children})=>{
-
     const {setMessage, user} = useContext(AuthContext);
     const [latestTask, setLatestTask]= useState(null);
     const [recentTasks, setRecentTasks]=useState(null);
     const [taskList, setTaskList]=useState(null);
+    
     //create task function
     const createTask=async(formData)=>{
         const config = {
@@ -21,6 +21,27 @@ export const TaskProvider=({children})=>{
         const response = await fetch("http://localhost:5000/tasks", config);
         if(response.ok){
             setMessage("Task created successfully");
+            getAllTasks();
+            setTimeout(()=>{
+                setMessage("");
+            }, 2000)
+        }else{
+            setMessage("Something went wrong, please try again");
+        }
+    }
+
+    //update task function
+    const updateTask=async(formData)=>{
+        const config = {
+            method: "PATCH",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(formData)
+        }
+        const response = await fetch(`http://localhost:5000/tasks/${formData.id}`, config);
+        if(response.ok){
+            setMessage("Task Updated successfully");
             getAllTasks();
             setTimeout(()=>{
                 setMessage("");
@@ -44,7 +65,6 @@ export const TaskProvider=({children})=>{
             const recentTask = tasks.slice(-3);
             setRecentTasks(recentTask);
 
-
         }else{
             alert("something went wrong");
         }
@@ -64,7 +84,8 @@ export const TaskProvider=({children})=>{
             createTask,
             latestTask,
             recentTasks,
-            taskList
+            taskList,
+            updateTask
         }}>
             {children}
         </TaskContext.Provider>

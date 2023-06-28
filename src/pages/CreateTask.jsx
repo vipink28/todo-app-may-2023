@@ -1,22 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskContext from "../context/TaskContext";
 import { dateFormat } from "../helper";
 
 function CreateTask(props) {
   const { latestTask, recentTasks } = useContext(TaskContext);
+  const [isUpdate, setIsUpdate]= useState(false);
+
+  const edit=()=>{
+    setIsUpdate(true);
+  }
+
+ 
+  
 
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
         <div className="col-md-6 bg-primary text-white h-100 d-flex flex-column align-items-center justify-content-center">
-          <TaskForm />
+          <TaskForm isUpdate={isUpdate} data={latestTask} setIsUpdate={setIsUpdate}/>
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
           <div className="card mb-3 home-card bg-primary text-white w-75 shadow-sm rounded-0">
             <div className="card-header bg-transparent border-0 d-flex">
               <h3>Latest Task</h3>
-              <button className="btn btn-info ms-auto">Edit</button>
+              <button className="btn btn-info ms-auto" onClick={edit}>Edit</button>
             </div>
             <div className="card-body p-4">
               { latestTask ?
