@@ -1,10 +1,14 @@
 import React from "react";
-
+import { dateFormat } from "../helper";
+import TaskForm from '../components/TaskForm';
 function Popup(props) {
+  const { option } = props;
+  const { type, data }=option;
+  
   return (
     <div className="modal" tabIndex="-1" id="task-modal">
       <div className="modal-dialog">
-        <div className="modal-content">
+        <div className="modal-content bg-primary">
           <div className="modal-header">
             <h5 className="modal-title">Modal title</h5>
             <button
@@ -15,20 +19,24 @@ function Popup(props) {
             ></button>
           </div>
           <div className="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" className="btn btn-primary">
-              Save changes
-            </button>
-          </div>
+            {
+              type === "view" ?
+              <div>
+                  <h5>{data.title}</h5>
+                  <p>{data.description}</p>
+                  <div className="d-flex">
+                    <p>Modified On: {dateFormat(data.modifiedOn)}</p>
+                    <p className="ms-auto">Due Date: {dateFormat(data.duedate)}</p>
+                  </div>
+              </div>: type === "edit" ? 
+              <div>
+                <TaskForm isUpdate={true} data={data}/>
+              </div>:
+              <div>
+                Delete
+              </div>
+            }
+          </div>         
         </div>
       </div>
     </div>
