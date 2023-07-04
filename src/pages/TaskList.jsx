@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import TaskContext from '../context/TaskContext';
 import { dateFormat } from '../helper';
@@ -20,6 +20,14 @@ function reducer(state, action){
 function TaskList(props) {
     const {taskList}=useContext(TaskContext);
     const [state, dispatch]=useReducer(reducer, 0);
+    const [searchText, setSearchText]=useState("");
+
+    const handleSearch = (e) => {
+        let text = e.target.value;
+        setSearchText(text);
+    }
+    
+    let filteredTask = taskList?.filter(task => task.title.toLowerCase().includes(searchText.toLowerCase()));
 
     return (
         <div className='container bg-primary p-5 text-white'>
@@ -27,6 +35,9 @@ function TaskList(props) {
                 <h4>Task List</h4>
                 <Link className='ms-auto' to="/create-task">Create Task</Link>
             </div>
+
+            <input type="text" className='form-control my-3' placeholder='search' onChange={handleSearch}/>
+
             <table className='table table-dark'>
                 <thead>
                     <tr>
@@ -40,7 +51,7 @@ function TaskList(props) {
                 <tbody>
                     {
                         taskList ? 
-                        taskList.map((item)=>{
+                        filteredTask.map((item)=>{
                             return (
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
